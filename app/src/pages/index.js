@@ -1,65 +1,49 @@
-import React, { useState, useEffect } from "react"
-import { graphql } from "gatsby"
+import React, { useState, useEffect } from 'react';
+import { graphql } from 'gatsby';
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import SideBar from "../components/sidebar"
-import { Container, Row, Col, Navbar } from "react-bootstrap"
-import BookFeed from "../components/feed"
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import BookFeed from '../components/feed';
 
 function myFunction(setMaximumBooksToShow, maximumBooksToShow) {
   if (
-    document.documentElement.clientHeight +
-      document.documentElement.scrollTop >=
-    document.documentElement.scrollHeight
+    document.documentElement.clientHeight
+      + document.documentElement.scrollTop
+    >= document.documentElement.scrollHeight
   ) {
-    setMaximumBooksToShow(maximumBooksToShow + 12)
+    setMaximumBooksToShow(maximumBooksToShow + 12);
   }
 }
 
 export default ({ data }) => {
-	let [maximumBooksToShow, setMaximumBooksToShow] = useState(12)
+  const [maximumBooksToShow, setMaximumBooksToShow] = useState(12);
 
   useEffect(() => {
-    window.document.onscroll = () =>
-      myFunction(setMaximumBooksToShow, maximumBooksToShow)
-	})
-	
+    window.document.onscroll = () => myFunction(setMaximumBooksToShow, maximumBooksToShow);
+  });
+
   return (
     <Layout>
       <SEO title="Home" />
-      <Container fluid> 
-        <Row>
-          <Col lg={2}>
-            <SideBar />
-          </Col>
-          <Col lg={10}>
-            <BookFeed data={data} limit={maximumBooksToShow} />
-          </Col>
-        </Row>
-        <Row>
-        {/* <footer style={{marginLeft: 150,
-          width: `100%`,
-          position: `fixed`,
-          bottom: 0}}>
-    © {new Date().getFullYear()}, Built with
-    {` `}
-    <a href="https://www.gatsbyjs.org">Gatsby</a>
-  </footer> */}
-        </Row>
-      </Container>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 overflow-y-auto py-3 px-6 ">
+          <BookFeed data={data} limit={maximumBooksToShow} />
+        </main>
+      </div>
+      {/* <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-3">
+        </div>
+        <div className="col-span-9">
+          <BookFeed data={data} limit={maximumBooksToShow} />
+        </div>
+      </div> */}
     </Layout>
-  )
-}
+  );
+};
 
 export const query = graphql`
   query MyQuery {
-    allBooksJson(
-      sort: {
-        fields: [rating]
-        order: DESC
-      }
-    ) {
+    allBooksJson(sort: { fields: [rating], order: DESC }) {
       edges {
         node {
           id
@@ -76,4 +60,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

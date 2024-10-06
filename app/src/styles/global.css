@@ -1,3 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: none;
+}
+
+body {
+    font-family: 'Nunito', sans-serif !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
 .custom-header{
     position: fixed;
 }
@@ -8,4 +26,12 @@
 
 .dark-mode {
     background-color: #3c4759;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+}
+
+.active-category {
+    background-color: #e9d5ff !important;
 }

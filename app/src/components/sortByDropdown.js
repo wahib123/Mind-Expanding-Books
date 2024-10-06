@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dropdown } from 'react-bootstrap';
 
 export const compareFunctions = {
   title_a_z: ({ node: bookOne }, { node: bookTwo }) => bookOne.title.localeCompare(bookTwo.title),
@@ -19,22 +18,45 @@ export const FIELDS_TO_SORT_BY = [
   { label: 'Title, Z-A', value: 'title_z_a' },
 ];
 
-export default ({ sortBy, onSortByItemClick }) => (
-  <div className="mb-2">
-    <Dropdown>
-      <Dropdown.Toggle variant="outline">
-        Sort By:
-        {' '}
-        {sortBy}
-      </Dropdown.Toggle>
+export default ({ sortBy, onSortByItemClick }) => {
+  // Close dropdown when clicking on an item
+  const handleClick = () => {
+    const elem = document.activeElement;
+    if (elem) {
+      elem?.blur();
+    }
+  };
+  return (
+    <div className="mb-2">
+      <div className="dropdown dropdown-bottom dropdown-end">
+        <div tabIndex={0} role="button" className="btn m-1" variant="outline">
+          Sort By:
+          {' '}
+          {sortBy}
+        </div>
 
-      <Dropdown.Menu>
-        {FIELDS_TO_SORT_BY.map((field, index) => (
-          <Dropdown.Item key={index} onClick={() => onSortByItemClick(field)}>
-            {field.label}
-          </Dropdown.Item>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-  </div>
-);
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-base-100 rounded-box z-[1] w-full p-0 shadow"
+        >
+          {FIELDS_TO_SORT_BY.map((field, index) => (
+            <li
+              className="cursor-pointer"
+              key={index}
+              onClick={() => onSortByItemClick(field)}
+            >
+              <span
+                onClick={handleClick}
+                className={`px-3 hover:bg-purple-300 active:!bg-purple-300 !text-black ${
+                  sortBy === field.label ? 'bg-purple-300' : ''
+                }`}
+              >
+                {field.label}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};

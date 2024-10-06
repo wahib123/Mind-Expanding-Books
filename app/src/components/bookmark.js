@@ -1,26 +1,20 @@
-import React, { useContext } from 'react'
-import { Button } from "react-bootstrap"
-import { BookmarkContext } from '../context/globalState'
+import React, { useContext } from 'react';
+import { BookmarkContext } from '../context/globalState';
 
 export default ({ book }) => {
-	const { updateReadingList, readingList } = useContext(BookmarkContext)
-	const readingListIds = readingList.bookIds
+  const { updateReadingList, readingList } = useContext(BookmarkContext);
+  const readingListIds = readingList.bookIds;
 
-	return (
-		<div onClick={() => updateReadingList({ type: 'bookmark', retrievedBook: book })}>
-			<Button style={{
-				 height: "30px", 
-				 width: "30px", 
-				 marginLeft: "0.25rem", 
-				 display: "grid", 
-				 justifyContent: "center",
-				alignContent: "center" }} 
-				variant={ readingListIds.includes(book.id) ? "success" : "light" 
-		  }>
-				<span>
-					🔖 
-				</span>
-			</Button>
-		</div>
-	)
-}
+  return (
+    <div
+      onClick={() => updateReadingList({ type: 'bookmark', retrievedBook: book })}
+    >
+      <button
+        className="w-9 h-9 flex items-center justify-center bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 transition-colors duration-200"
+        variant={readingListIds.includes(book.id) ? 'success' : 'light'}
+      >
+        <span>🔖</span>
+      </button>
+    </div>
+  );
+};
